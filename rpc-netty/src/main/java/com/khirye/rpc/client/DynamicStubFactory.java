@@ -28,7 +28,7 @@ public class DynamicStubFactory implements StubFactory {
             "   }\n" +
             "}";
     @Override
-    public <T> T createStud(Transport transport, Class<T> serviceClass) {
+    public <T> T createStub(Transport transport, Class<T> serviceClass) {
         String stubSimpleName = serviceClass.getSimpleName() + "Stub";
         String classFullName = serviceClass.getName();
         String stubFullName = "com.khirye.rpc.client.stubs." + stubSimpleName;
