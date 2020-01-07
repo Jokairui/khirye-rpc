@@ -7,7 +7,7 @@ public interface RpcAccessPoint {
 
     <T> T getRemoteService(URI serviceUri, Class<T> clazz);
 
-    <T> URI addServiceProvider(Class<T> clazz);
+    <T> URI addServiceProvider(T service, Class<T> clazz);
 
     NameService getNameService(URI uri);
 
