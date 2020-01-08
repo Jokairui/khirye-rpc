@@ -1,0 +1,3 @@
+com.khirye.rpc.serialize.impl.MetadataSerializer
+com.khirye.rpc.serialize.impl.StringSerializer
+com.khirye.rpc.serialize.impl.RpcRequestSerializer

@@ -9,14 +9,17 @@ import com.khirye.rpc.transport.RequestHandlerRegistry;
 import com.khirye.rpc.transport.Transport;
 import com.khirye.rpc.transport.TransportClient;
 import com.khirye.rpc.transport.TransportServer;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Closeable;
 import java.net.InetSocketAddress;
 import java.net.URI;
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeoutException;
 
+@Slf4j
 public class NettyRpcAccessPoint implements RpcAccessPoint {
 
     private TransportClient client = ServiceSupport.load(TransportClient.class);
@@ -51,6 +54,15 @@ public class NettyRpcAccessPoint implements RpcAccessPoint {
 
     @Override
     public NameService getNameService(URI uri) {
+        Collection<NameService> nameServices = ServiceSupport.loadAll(NameService.class);
+        for(NameService nameService : nameServices) {
+            if(nameService.supportedSchemes().contains(uri.getScheme())){
+                nameService.connect(uri);
+                return nameService;
+            }
+        }
+
+        log.warn("Got no NameService now...");
         return null;
     }
 
