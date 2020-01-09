@@ -12,6 +12,7 @@ import com.khirye.rpc.transport.TransportServer;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Closeable;
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.util.Collection;
@@ -77,5 +78,13 @@ public class NettyRpcAccessPoint implements RpcAccessPoint {
                 server.stop();
             }
         };
+    }
+
+    @Override
+    public void close() throws IOException {
+        if(null != server) {
+            server.stop();
+        }
+        client.close();
     }
 }

@@ -30,7 +30,7 @@ public abstract class CommandDecoder extends ByteToMessageDecoder {
 
         Header header = decodeHeader(byteBuf);
 
-        final int payloadLength = length - 4 - header.length();
+        final int payloadLength = length - header.length();
         byte[] payload = new byte[payloadLength];
         byteBuf.readBytes(payload);
         list.add(new Command(header, payload));

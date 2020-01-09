@@ -79,7 +79,7 @@ public class NettyClient implements TransportClient {
 
     private Channel getChannel(SocketAddress address, long connectionTimeout) throws InterruptedException, TimeoutException {
         ChannelFuture channelFuture = bootstrap.connect(address);
-        if (channelFuture.await(connectionTimeout)) {
+        if (!channelFuture.await(connectionTimeout)) {
             throw new TimeoutException();
         }
         Channel channel = channelFuture.channel();

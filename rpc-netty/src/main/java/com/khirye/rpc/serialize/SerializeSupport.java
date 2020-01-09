@@ -1,5 +1,6 @@
 package com.khirye.rpc.serialize;
 
+import com.khirye.rpc.api.spi.ServiceSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +14,17 @@ public class SerializeSupport {
 
     private static Map<Class<?>, Serializer<?>> serializerMap = new HashMap<>();
     private static Map<Byte, Class<?>> typeMap = new HashMap<>();
+
+    static {
+        for(Serializer serializer : ServiceSupport.loadAll(Serializer.class)) {
+            registerType(serializer.type(), serializer.getSerializeClass(), serializer);
+        }
+    }
+
+    private static <E> void registerType(byte type, Class<E> serializeClass, Serializer<E> serializer) {
+        serializerMap.putIfAbsent(serializeClass, serializer);
+        typeMap.put(type, serializeClass);
+    }
 
 
     public static <E> E parse(byte[] buffer) {

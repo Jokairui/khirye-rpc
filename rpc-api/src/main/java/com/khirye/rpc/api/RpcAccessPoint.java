@@ -3,7 +3,7 @@ package com.khirye.rpc.api;
 import java.io.Closeable;
 import java.net.URI;
 
-public interface RpcAccessPoint {
+public interface RpcAccessPoint extends Closeable {
 
     <T> T getRemoteService(URI serviceUri, Class<T> clazz);
 

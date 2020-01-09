@@ -25,7 +25,7 @@ public class AbstractStub implements ServiceStub {
         try {
             Command responseCommand = transport.send(command).get();
             ResponseHeader responseHeader = (ResponseHeader)responseCommand.getHeader();
-            if(Integer.compare(responseHeader.getCode(), Code.SUCCESS.getCode()) == 0) {
+            if(responseHeader.getCode() == Code.SUCCESS.getCode()) {
                 return responseCommand.getPayload();
             }
             throw new RuntimeException(responseHeader.getError());

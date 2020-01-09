@@ -11,7 +11,7 @@ public class DynamicStubFactory implements StubFactory {
 
     private final static String STUB_SOURCE_TEMPLATE =
         "package com.khirye.rpc.client.stubs;\n" +
-            "import come.khirye.rpc.serialize.SerializeSupport;\n" +
+            "import com.khirye.rpc.serialize.SerializeSupport;\n" +
             "\n" +
             "public class %s extends AbstractStub implements %s {\n" +
             "   @Override\n" +
