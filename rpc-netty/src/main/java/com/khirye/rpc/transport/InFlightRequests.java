@@ -1,11 +1,14 @@
 package com.khirye.rpc.transport;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.*;
 
+@Slf4j
 public class InFlightRequests implements Closeable {
 
     private final static long TIMEOUT_SEC = 10L;
@@ -21,6 +24,7 @@ public class InFlightRequests implements Closeable {
     private void removeTimeoutFutures() {
         futureMap.entrySet().removeIf(entry -> {
             if(System.nanoTime() - entry.getValue().getTimestamp() > TimeUnit.SECONDS.convert(TIMEOUT_SEC, TimeUnit.NANOSECONDS)) {
+                log.info("removed the timeout future, key is {}", entry.getKey());
                 semaphore.release();
                 return true;
             }
@@ -37,7 +41,7 @@ public class InFlightRequests implements Closeable {
     }
 
     public ResponseFuture remove(int requestId) {
-        ResponseFuture future = futureMap.get(requestId);
+        ResponseFuture future = futureMap.remove(requestId);
 
         //可能恰好被超时检查的定时任务给remove掉了
         if (null != future) {

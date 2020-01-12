@@ -15,7 +15,7 @@ public class ResponseEncoder extends CommandEncoder {
         byteBuf.writeInt(responseHeader.getVersion());
         byteBuf.writeInt(responseHeader.getRequestId());
         byteBuf.writeInt(responseHeader.getCode());
-        byte[] errorByte = responseHeader.getError().getBytes(StandardCharsets.UTF_8);
+        byte[] errorByte = responseHeader.getError() == null ? new byte[0] : responseHeader.getError().getBytes(StandardCharsets.UTF_8);
         byteBuf.writeInt(errorByte.length);
         byteBuf.writeBytes(errorByte);
     }

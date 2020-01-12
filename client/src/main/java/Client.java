@@ -18,7 +18,7 @@ public class Client {
         File tmpDirFile = new File(System.getProperty("java.io.tmpdir"));
 
         File file = new File(tmpDirFile, "simple_rpc.name_service.data");
-        String name = "a";
+        String name = "Khirye RPC";
 
         try (RpcAccessPoint rpcAccessPoint = ServiceSupport.load(RpcAccessPoint.class)){
              NameService nameService = rpcAccessPoint.getNameService(file.toURI());

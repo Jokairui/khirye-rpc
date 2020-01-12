@@ -10,7 +10,7 @@ public class RequestEncoder extends CommandEncoder {
     @Override
     protected void encodeHeader(Header header, ByteBuf byteBuf) {
         byteBuf.writeInt(header.getType());
-        byteBuf.writeInt(header.getRequestId());
         byteBuf.writeInt(header.getVersion());
+        byteBuf.writeInt(header.getRequestId());
     }
 }
